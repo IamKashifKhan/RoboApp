@@ -10,7 +10,7 @@ namespace RoboApp
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new NavigationPage( new CalibrationPage());
         }
 
         protected override void OnStart()

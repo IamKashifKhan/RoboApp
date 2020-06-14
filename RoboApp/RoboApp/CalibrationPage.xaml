@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              NavigationPage.HasBackButton="False"
+              NavigationPage.HasNavigationBar="False"
+             x:Class="RoboApp.CalibrationPage">
+    <ContentPage.Content>
+        <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Padding="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Image Source="RoboBG" Scale="1.2" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Aspect="Fill"></Image>
+            <Grid Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Button Text="Calibrate" BackgroundColor="Red" TextColor="White" Visual="Material" Grid.Column="0"  Grid.Row="0" Clicked="Button_Clicked"></Button>
+                <Button Text="Read" BackgroundColor="Green" TextColor="White" Visual="Material" Grid.Column="1"  Grid.Row="0" Clicked="Button_Clicked"></Button>
+                <Button Text="Adjust" BackgroundColor="Blue" TextColor="White" Visual="Material" Grid.Column="2"  Grid.Row="0" Clicked="Button_Clicked"></Button>
+                <ListView x:Name="CalibrationListView"  Grid.Column="0" HasUnevenRows="True" Grid.ColumnSpan="3" Grid.Row="1">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Spacing="5"  VerticalOptions="StartAndExpand"  HeightRequest="400"  HorizontalOptions="StartAndExpand"  Orientation="Vertical" Padding="10">
+
+                                    <StackLayout BackgroundColor="Gray" VerticalOptions="Fill" HorizontalOptions="FillAndExpand">
+                                        <Label Text="{Binding MotorType, Converter={StaticResource HeadingConverter}}" FontSize="Large" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center"></Label>
+                                    </StackLayout>
+                                    <StackLayout x:Name="Commonitemstack"   VerticalOptions="Fill" HorizontalOptions="FillAndExpand">
+                                        <Grid RowSpacing="5">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="40"></RowDefinition>
+                                                <RowDefinition Height="40"></RowDefinition>
+                                                <RowDefinition Height="20"></RowDefinition>
+                                                <RowDefinition Height="20"></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label Text="Zero Degree" VerticalOptions="Center" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center"></Label>
+
+                                            <StackLayout Grid.Row="0" Grid.Column="1"  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Padding="20,3,20,3">
+                                                <Frame BorderColor="Black" Padding="0"  CornerRadius="6" Margin="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Button Clicked="Add_zero_deg" Text="+" TextColor="White" BackgroundColor="Green" Grid.Row="0" Grid.Column="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"></Button>
+                                                        <Label Text="{Binding Zero_Degree}" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center"></Label>
+                                                        <Button Clicked="Sub_zero_deg"  Text="-" TextColor="White" BackgroundColor="Red"  Grid.Row="0" Grid.Column="2" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"></Button>
+                                                    </Grid>
+                                                </Frame>
+                                            </StackLayout>
+
+                                            <Label Text="Current Degree" VerticalOptions="Center" Grid.Row="1" Grid.Column="0" HorizontalOptions="Center"></Label>
+
+                                            <StackLayout Grid.Row="1" Grid.Column="1"  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Padding="20,3,20,3">
+                                                <Frame BorderColor="Black" Padding="0"  CornerRadius="6" Margin="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Button Clicked="Add_current_deg" Text="+" TextColor="White" BackgroundColor="Green" Grid.Row="0" Grid.Column="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"></Button>
+                                                        <Label Text="{Binding Current_Degree}" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center"></Label>
+                                                        <Button Clicked="Sub_current_deg" Text="-" TextColor="White" BackgroundColor="Red"  Grid.Row="0" Grid.Column="2" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"></Button>
+                                                    </Grid>
+                                                </Frame>
+                                            </StackLayout>
+
+
+
+                                            <Label  Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" VerticalOptions="FillAndExpand" HorizontalOptions="CenterAndExpand" Margin="5,0,0,0"  TextColor="#206D7E">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="IsTrue : "/>
+                                                        <Span Text="{Binding Istrue}" TextColor="Black"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+
+                                            <Label  Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" VerticalOptions="FillAndExpand" HorizontalOptions="CenterAndExpand" Margin="5,0,0,0"  TextColor="#206D7E">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="Time : "/>
+                                                        <Span Text="{Binding Datatime, StringFormat='{}{0:hh\\:mm}'}"  TextColor="Black"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+
+                                        </Grid>
+
+                                    </StackLayout>
+                                    <StackLayout x:Name="AdditionalSettingStack"  IsVisible="{Binding MotorType, Converter={StaticResource StackVisibility}}" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand">
+                                        <Grid RowSpacing="5">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="40"></RowDefinition>
+                                                <RowDefinition Height="40"></RowDefinition>
+                                                <RowDefinition Height="40"></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label Text="Forward" VerticalOptions="Center" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center"></Label>
+
+                                            <StackLayout Grid.Row="0" Grid.Column="1"  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Padding="20,3,20,3">
+                                                <Frame BorderColor="Black" Padding="0"  CornerRadius="6" Margin="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Button Clicked="Add_forward" Text="+" TextColor="White" BackgroundColor="Green" Grid.Row="0" Grid.Column="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"></Button>
+                                                        <Label Text="{Binding Forward}" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center"></Label>
+                                                        <Button Clicked="Sub_forward"  Text="-" TextColor="White" BackgroundColor="Red"  Grid.Row="0" Grid.Column="2" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"></Button>
+                                                    </Grid>
+                                                </Frame>
+                                            </StackLayout>
+
+                                            <Label Text="Back" VerticalOptions="Center" Grid.Row="1" Grid.Column="0" HorizontalOptions="Center"></Label>
+
+                                            <StackLayout Grid.Row="1" Grid.Column="1"   VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Padding="20,3,20,3">
+                                                <Frame BorderColor="Black" Padding="0"  CornerRadius="6" Margin="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Button Clicked="Add_backward" Text="+" TextColor="White" BackgroundColor="Green" Grid.Row="0" Grid.Column="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"></Button>
+                                                        <Label Text="{Binding Back}" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center"></Label>
+                                                        <Button Clicked="Sub_backward" Text="-" TextColor="White" BackgroundColor="Red"  Grid.Row="0" Grid.Column="2" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"></Button>
+                                                    </Grid>
+                                                </Frame>
+                                            </StackLayout>
+
+                                            <Label Text="Center" VerticalOptions="Center" Grid.Row="2" Grid.Column="0" HorizontalOptions="Center"></Label>
+
+                                            <StackLayout Grid.Row="2" Grid.Column="1"   VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Padding="20,3,20,3">
+                                                <Frame BorderColor="Black" Padding="0" CornerRadius="6" Margin="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Button Clicked="Add_center" Text="+" TextColor="White" BackgroundColor="Green" Grid.Row="0" Grid.Column="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"></Button>
+                                                        <Label Text="{Binding Center}" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center"></Label>
+                                                        <Button Clicked="Sub_center" Text="-" TextColor="White" BackgroundColor="Red"  Grid.Row="0" Grid.Column="2" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"></Button>
+                                                    </Grid>
+                                                </Frame>
+                                            </StackLayout>
+
+
+                                        </Grid>
+
+                                    </StackLayout>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <!--<ScrollView Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1">
+                <Grid x:Name="CalibrationGrid" BackgroundColor="DeepSkyBlue" Padding="5,0,5,0">
+
+                </Grid>
+                </ScrollView>-->
+
+
+            </Grid>
+
+            <Grid Grid.Column="1" Padding="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"></RowDefinition>
+                    <RowDefinition Height="40"></RowDefinition>
+                    <RowDefinition Height="40"></RowDefinition>
+                    <RowDefinition Height="40"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Button Text="Head" x:Name="HeadBtn" BackgroundColor="Orange" TextColor="White" Visual="Material" Grid.Column="0"  Grid.Row="0" AutomationId="0" Clicked="PartBtnClicked"></Button>
+                <Button Text="Neck" x:Name="NeckBtn"  BackgroundColor="Green" TextColor="White" Visual="Material" Grid.Column="1"  Grid.Row="0" AutomationId="1"  Clicked="PartBtnClicked"></Button>
+                <Button Text="R_Shoulder" x:Name="R_ShoulderBtn"  BackgroundColor="Blue" TextColor="White" Visual="Material" Grid.Column="2"  Grid.Row="0" AutomationId="2"  Clicked="PartBtnClicked"></Button>
+
+                <Button Text="L_Shoulder" x:Name="L_ShoulderBtn"  BackgroundColor="DarkOrange" TextColor="White" Visual="Material" Grid.Column="0"  Grid.Row="1" AutomationId="3"  Clicked="PartBtnClicked"></Button>
+                <Button Text="R_Elbow" x:Name="R_ElbowBtn"  BackgroundColor="YellowGreen" TextColor="White" Visual="Material" Grid.Column="1"  Grid.Row="1" AutomationId="4"  Clicked="PartBtnClicked"></Button>
+                <Button Text="L_Elbow" x:Name="L_ElbowBtn"  BackgroundColor="BlueViolet" TextColor="White" Visual="Material" Grid.Column="2"  Grid.Row="1" AutomationId="5"  Clicked="PartBtnClicked"></Button>
+
+                <Button Text="R_Wrist" x:Name="R_WristBtn" BackgroundColor="OrangeRed" TextColor="White" Visual="Material" Grid.Column="0"  Grid.Row="2" AutomationId="6"  Clicked="PartBtnClicked"></Button>
+                <Button Text="L_Wrist" x:Name="L_WristBtn"  BackgroundColor="MediumSeaGreen" TextColor="White" Visual="Material" Grid.Column="1"  Grid.Row="2" AutomationId="7"  Clicked="PartBtnClicked"></Button>
+                <Button Text="R_Leg" x:Name="R_LegBtn" BackgroundColor="CadetBlue" TextColor="White" Visual="Material" Grid.Column="2"  Grid.Row="2" AutomationId="8"  Clicked="PartBtnClicked"></Button>
+
+                <Button Text="L_Leg" x:Name="L_LegBtn" BackgroundColor="Silver" TextColor="White" Visual="Material" Grid.Column="1"  Grid.Row="3" AutomationId="9"  Clicked="PartBtnClicked"></Button>
+
+
+
+
+
+
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
